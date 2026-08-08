@@ -44,9 +44,9 @@ jobs:
           git push
 
       - name: 同步到 Gitee（国内访问）
-        env:
+                env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
           GITEE_USER: ${{ secrets.GITEE_USER }}
         run: |
-          git remote add gitee "https://oauth2:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/live-src.git" || git remote set-url gitee "https://oauth2:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/live-src.git"
-          git push gitee HEAD:master -f
+          python gitee_push.py live.txt live.m3u8
+
