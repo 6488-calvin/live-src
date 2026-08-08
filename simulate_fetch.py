@@ -122,7 +122,13 @@ def fetch_all(max_pages: int):
         ctx = p.chromium.launch_persistent_context(
             user_data_dir=PROFILE, headless=True, locale="zh-CN",
             viewport={"width": 1366, "height": 900}, user_agent=UA,
-            args=["--disable-blink-features=AutomationControlled"])
+            args=[
+"--disable-blink-features=AutomationControlled",
+"--no-sandbox", # Actions root 用户必需
+"--disable-dev-shm-usage", # /dev/shm 太小会段错误
+"--disable-gpu", # headless 不需要 GPU
+"--single-process", # 进一步降低崩溃概率
+])
         ctx.add_init_script(
             "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
         page = ctx.new_page()
