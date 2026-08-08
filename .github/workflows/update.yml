@@ -4,7 +4,7 @@ on:
   schedule:
     # 北京时间每天 04:00 自动执行（UTC 20:00）
     - cron: "0 20 * * *"
-  workflow_dispatch: {}   # 也可以在 Actions 页面手动点"Run workflow"
+  workflow_dispatch: {}
 
 jobs:
   update:
@@ -21,7 +21,7 @@ jobs:
 
       - name: 安装依赖
         run: |
-          pip install playwright beautifulsoup4
+          pip install playwright beautifulsoup4 requests
 
       - name: 安装浏览器内核
         run: |
@@ -43,10 +43,9 @@ jobs:
           git commit -m "daily update $(date -u +%F)" || echo "今日无变化"
           git push
 
-      - name: 同步到 Gitee（国内访问）
-                env:
+      - name: 通过 Gitee Contents API 推送到 Gitee
+        env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
           GITEE_USER: ${{ secrets.GITEE_USER }}
         run: |
           python gitee_push.py live.txt live.m3u8
-
