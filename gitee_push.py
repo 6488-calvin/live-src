@@ -16,14 +16,17 @@ REPO = "live-src"   # 必须与 Gitee 仓库名一致（README-云端部署.md �
 
 
 def get_sha(owner: str, repo: str, path: str, token: str):
-    """查询现有文件的 sha（更新时需要）。不存在返回 None。"""
+    """查询现有文件的 sha（更新时需要）。Gitee API 在限流或边缘情况可能返回
+    list 形式的错误而非 dict，需健壮处理。"""
     r = requests.get(
         f"{API}/repos/{owner}/{repo}/contents/{path}",
         params={"access_token": token},
         timeout=20,
     )
     if r.status_code == 200:
-        return r.json().get("sha")
+        data = r.json()
+        if isinstance(data, dict):
+            return data.get("sha")
     return None
 
 
