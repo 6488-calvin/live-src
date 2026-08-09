@@ -2,7 +2,6 @@ name: daily-live-update
 
 on:
   schedule:
-    # 北京时间每天 04:00 自动执行（UTC 20:00）
     - cron: "0 20 * * *"
   workflow_dispatch: {}
 
@@ -10,7 +9,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    steps:
+ steps:
       - name: 拉取代码
         uses: actions/checkout@v4
 
@@ -34,14 +33,6 @@ jobs:
       - name: 生成 m3u8 播放列表
         run: |
           python txt2m3u.py live.txt live.m3u8
-
-      - name: 提交更新回 GitHub
-        run: |
-          git config user.name "live-update-bot"
-          git config user.email "live-update-bot@users.noreply.github.com"
-          git add live.txt live.m3u8
-          git commit -m "daily update $(date -u +%F)" || echo "今日无变化"
-          git push
 
       - name: 通过 Gitee Contents API 推送到 Gitee
         env:
