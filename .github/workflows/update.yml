@@ -9,7 +9,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 30
- steps:
+    steps:
       - name: 拉取代码
         uses: actions/checkout@v4
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: 生成 m3u8 播放列表
         run: |
-          python txt2m3u.py live.txt live.m3u8
+          python txt2m8u.py live.txt live.m3u8
 
       - name: 通过 Gitee Contents API 推送到 Gitee
         env:
