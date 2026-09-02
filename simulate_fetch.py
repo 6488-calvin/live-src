@@ -44,7 +44,7 @@ from bs4 import BeautifulSoup
 
 BASE = "http://www.foodieguide.com/iptvsearch/"
 PROFILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fg_profile")
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "live_simulate.txt")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "live.txt")
 CUTOFF = (2026, 5, 8)  # 最近三个月（含 5 月 8 日之后）
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
