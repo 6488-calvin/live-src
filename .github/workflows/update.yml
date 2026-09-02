@@ -32,11 +32,11 @@ jobs:
 
       - name: 生成 m3u8 播放列表
         run: |
-          python txt2m3u.py live.txt live.m3u8
+          python txt2m3u.py live2.txt live2.m3u8
 
       - name: 通过 Gitee Contents API 推送到 Gitee
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
           GITEE_USER: ${{ secrets.GITEE_USER }}
         run: |
-          python gitee_push.py live.txt live.m3u8
+          python gitee_push.py live2.txt live2.m3u8
